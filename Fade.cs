@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
@@ -31,7 +29,7 @@ public class Fade : Singleton<Fade>
                 if (_alpha >= ALPHA_MAX)
                 {
                     _alpha = ALPHA_MAX;
-                    ReturnFadeStatus();
+                    InitialFadeStatus();
                 }
                 _fadeImage.color = new Color(0f, 0f, 0f, _alpha);
                 break;
@@ -41,14 +39,14 @@ public class Fade : Singleton<Fade>
                 {
                     _alpha = ALPHA_MIN;
                     _fadeImage.gameObject.SetActive(false);
-                    ReturnFadeStatus();
+                    InitialFadeStatus();
                 }
                 _fadeImage.color = new Color(0f, 0f, 0f, _alpha);
                 break;
         }
     }
 
-    public void ReturnFadeStatus()
+    public void InitialFadeStatus()
     {
         _fadeStatus = fadeStatus.none;
         OnFaded?.Invoke();

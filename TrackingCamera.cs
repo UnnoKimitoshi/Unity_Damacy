@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 // カメラの回転の軸となる親を作りそれにアタッチ
@@ -25,7 +23,7 @@ public class TrackingCamera : MonoBehaviour
 
     void Update()
     {
-        // マウスで回転
+        // マウスで回転(カメラが移動)
         var inputAngle = new Vector3(-Input.GetAxis("Mouse Y"), Input.GetAxis("Mouse X")) * _mouseSensivity;
         _angle += inputAngle;
         // X軸方向の回転に制限をかける
@@ -45,7 +43,7 @@ public class TrackingCamera : MonoBehaviour
         transform.position = position;
         transform.eulerAngles = _angle;
 
-        // カメラの場所を設定
+        // 子ども（カメラ）の場所を設定
         var cameraPos = _camera.localPosition;
         cameraPos.y = CameraOffset.y;
         cameraPos.z = CameraOffset.z;

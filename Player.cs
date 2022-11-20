@@ -9,10 +9,19 @@ public class Player : Singleton<Player>
     // 移動の入力値
     float _horizontal, _vertical;
     [SerializeField] float _speed;
+    float Speed
+    {
+        get
+        {
+            var rate = Mathf.Lerp(1, 0.5f, size / MainScene.Instance.targetSize);
+            return _speed * size * rate;
+        }
+    }
     Vector3 _defaultScale;
+    public Vector3 Scale => _defaultScale * size;
     // サイズに比例する重力
     Vector3 _defaultGravity = new Vector3(0, -9.8f, 0);
-    Vector3 _gravity;
+    Vector3 gravity => _defaultGravity * size;
     //　ゲーム上での球のサイズ
     public float size = 1;
 
@@ -24,10 +33,12 @@ public class Player : Singleton<Player>
 
     private void Update()
     {
-        _horizontal = Input.GetAxisRaw("Horizontal");
-        _vertical = Input.GetAxisRaw("Vertical");
-        transform.localScale = _defaultScale * size;
-        _gravity = _defaultGravity * size;
+        if (MainScene.Instance.isPlaying)
+        {
+            _horizontal = Input.GetAxisRaw("Horizontal");
+            _vertical = Input.GetAxisRaw("Vertical");
+        }
+        transform.localScale = Scale;
     }
 
     private void FixedUpdate()
@@ -39,6 +50,7 @@ public class Player : Singleton<Player>
             ).normalized;
         var moveDir = cameraForward * _vertical
             + Camera.main.transform.right * _horizontal;
-        _rb.AddForce(moveDir * _speed + _gravity);
+        _rb.AddForce(moveDir * Speed);
+        _rb.AddForce(gravity, ForceMode.Acceleration);
     }
 }

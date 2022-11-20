@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+// Titleシーンの進行、処理を管理するクラス
 public class TitleScene : MonoBehaviour
 {
     Fade _fade;
@@ -19,6 +20,7 @@ public class TitleScene : MonoBehaviour
 
     public void OnStartButtonPushed()
     {
+        SoundManager.Instance.PlaySE(SE.StartButton);
         _fade.FadeIn(() =>
         {
             SceneManager.LoadScene("Main");

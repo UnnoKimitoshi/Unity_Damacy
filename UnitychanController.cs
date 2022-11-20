@@ -19,8 +19,13 @@ public class UnitychanController : MonoBehaviour
 
     void Update()
     {
-        var inputVertical = Input.GetAxisRaw("Vertical");
-        var inputHorizontal = Input.GetAxisRaw("Horizontal");
+        float inputVertical = 0;
+        float inputHorizontal = 0;
+        if (MainScene.Instance.isPlaying)
+        {
+            inputVertical = Input.GetAxisRaw("Vertical");
+            inputHorizontal = Input.GetAxisRaw("Horizontal");
+        }
         if (inputVertical != 0)
         {
             _animator.SetInteger("input", (int)inputVertical);

@@ -17,11 +17,7 @@ public class Clock_UI : MonoBehaviour
 
     void UpdateImage()
     {
-        // float clockRangeClamped = Mathf.InverseLerp(
-        //     MainScene.Instance.gameTimerLength,
-        //     0,
-        //     );
-        var rate = MainScene.Instance.gameTimerRemaining / MainScene.Instance.gameTimerLength;
+        var rate = MainScene.Instance.gameTimerRemaining / (MainScene.Instance.gameTimerLength * 60);
         _fillImage.fillAmount = Mathf.Lerp(0, 1, rate);
     }
 

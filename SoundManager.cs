@@ -17,6 +17,7 @@ public enum SE
 
 public class SoundManager : Singleton<SoundManager>
 {
+    // 楽曲データの基礎クラス
     public class SoundData
     {
         public AudioClip audioClip;
@@ -44,10 +45,14 @@ public class SoundManager : Singleton<SoundManager>
     AudioSource _bgmAudioSource;
     // SE用のAudioSource 同時に鳴らしたいSEの種類の数だけ用意
     AudioSource[] _seAudioSources = new AudioSource[5];
+    // 上のサブ
+    AudioSource _subSEAudioSource = new AudioSource();
+    [SerializeField] float _bgmMasterVolume = 0.5f;
+    [SerializeField] float _seMasterVolume = 0.5f;
     // 同じSEを再び再生できるようになるまでの間隔
     [SerializeField] float _playTimeDistance = 0.01f;
 
-    void Awake()
+    new void Awake()
     {
         base.Awake();
         // Bgm用のAudioSourceを作成
@@ -57,6 +62,7 @@ public class SoundManager : Singleton<SoundManager>
         {
             _seAudioSources[i] = gameObject.AddComponent<AudioSource>();
         }
+        _subSEAudioSource = gameObject.AddComponent<AudioSource>();
     }
 
     public void PlayBgm(Bgm bgm)
@@ -68,7 +74,7 @@ public class SoundManager : Singleton<SoundManager>
             return;
         }
         _bgmAudioSource.clip = data.audioClip;
-        _bgmAudioSource.volume = data.volume;
+        _bgmAudioSource.volume = data.volume * _bgmMasterVolume;
         _bgmAudioSource.Play();
     }
 
@@ -77,10 +83,11 @@ public class SoundManager : Singleton<SoundManager>
         _bgmAudioSource.Stop();
     }
 
-    public void PlaySE(SE se = SE.normal)
+    public void PlaySE(SE se = SE.normal, bool sub = false)
     {
         // 未使用のAudioSourceを取得
         var audioSource = GetUnusedSEAudioSource();
+        if (sub) audioSource = _subSEAudioSource;
         if (audioSource == null) return; //再生できませんでした
         var data = _seDatas.Find(seData => seData.se == se);
         if (data == null)
@@ -91,9 +98,10 @@ public class SoundManager : Singleton<SoundManager>
         // 前回再生した時間から十分経過しているか検証
         if (Time.realtimeSinceStartup - data.playdTime < _playTimeDistance) return;
         audioSource.clip = data.audioClip;
-        audioSource.volume = data.volume;
+        audioSource.volume = data.volume * _seMasterVolume;
         audioSource.Play();
     }
+
     //未使用のAudioSourceの取得 全て使用中の場合はnullを返却
     private AudioSource GetUnusedSEAudioSource()
     {
@@ -102,5 +110,18 @@ public class SoundManager : Singleton<SoundManager>
             if (_seAudioSources[i].isPlaying == false) return _seAudioSources[i];
         }
         return null;
+    }
+
+    public void ChangeBgmMasterVolume(float value)
+    {
+        _bgmMasterVolume = value;
+        var clip = _bgmAudioSource.clip;
+        var bgmVolume = _bgmData.Find(bgmData => bgmData.audioClip == _bgmAudioSource.clip).volume;
+        _bgmAudioSource.volume = bgmVolume * _bgmMasterVolume;
+    }
+
+    public void ChangeSEMasterVolume(float value)
+    {
+        _seMasterVolume = value;
     }
 }

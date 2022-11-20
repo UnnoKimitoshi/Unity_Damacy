@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 [ExecuteInEditMode]
@@ -19,6 +17,7 @@ public class UnitychanController : MonoBehaviour
 
     void Update()
     {
+        // 入力に対してアニメーションを再生
         float inputVertical = 0;
         float inputHorizontal = 0;
         if (MainScene.Instance.isPlaying)
@@ -42,7 +41,7 @@ public class UnitychanController : MonoBehaviour
     }
     void LateUpdate()
     {
-
+        // ユニティちゃんは球からカメラの方向にオフセットはられた場所に配置
         // X-Z平面上で「球->カメラ」を正規化
         var playerToCamera = Vector3.Scale(
             Camera.main.transform.position - _player.position,

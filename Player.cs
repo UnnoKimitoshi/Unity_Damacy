@@ -13,22 +13,22 @@ public class Player : Singleton<Player>
     {
         get
         {
+            // 大きくなるに連れて遅くなる
             var rate = Mathf.Lerp(1, 0.5f, size / MainScene.Instance.targetSize);
             return _speed * size * rate;
         }
     }
-    Vector3 _defaultScale;
-    public Vector3 Scale => _defaultScale * size;
-    // サイズに比例する重力
-    Vector3 _defaultGravity = new Vector3(0, -9.8f, 0);
-    Vector3 gravity => _defaultGravity * size;
+    Vector3 _scale;
+    public Vector3 Scale => _scale * size;
+    Vector3 _gravity = new Vector3(0, -9.8f, 0);
+    Vector3 gravity => _gravity * size;
     //　ゲーム上での球のサイズ
     public float size = 1;
 
     private void Start()
     {
         _rb = GetComponent<Rigidbody>();
-        _defaultScale = transform.localScale;
+        _scale = transform.localScale;
     }
 
     private void Update()
@@ -43,6 +43,7 @@ public class Player : Singleton<Player>
 
     private void FixedUpdate()
     {
+        // カメラの前方＝プレイヤーの前方とした移動処理
         // X-Z平面上でカメラの前方向を正規化
         var cameraForward = Vector3.Scale(
             Camera.main.transform.forward,

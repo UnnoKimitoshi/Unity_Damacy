@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -38,9 +37,9 @@ public class MainScene : Singleton<MainScene>
         Application.targetFrameRate = 60;
         _startTimerRemaining = _startTimerLength;
         gameTimerRemaining = gameTimerLength * 60;
+        Score.Instance.score = 0;
         _fade = Fade.Instance;
         _soundManager = SoundManager.Instance;
-        // フェードアウトしたらスタートタイマーカウント開始を登録
         _fade.FadeOut(() =>
         {
             _countStartTimer = true;
@@ -53,6 +52,7 @@ public class MainScene : Singleton<MainScene>
         CountGameTimer();
     }
 
+    // ...2->1->Startと表示、テキスト更新毎にSEを鳴らす
     void CountStartTimer()
     {
         if (!_countStartTimer) return;

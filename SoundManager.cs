@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -45,7 +44,7 @@ public class SoundManager : Singleton<SoundManager>
     AudioSource _bgmAudioSource;
     // SE用のAudioSource 同時に鳴らしたいSEの種類の数だけ用意
     AudioSource[] _seAudioSources = new AudioSource[5];
-    // 上のサブ
+    // // 飛ばしたくないSE用のAudioSouece
     AudioSource _subSEAudioSource = new AudioSource();
     [SerializeField] float _bgmMasterVolume = 0.5f;
     [SerializeField] float _seMasterVolume = 0.5f;

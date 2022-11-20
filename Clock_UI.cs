@@ -1,12 +1,12 @@
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class Clock_UI : MonoBehaviour
 {
+    // 時間経過に連れて消えていく画像
     [SerializeField] Image _fillImage;
+    // 残り時間を表示するテキスト
     [SerializeField] TextMeshProUGUI _clockText;
 
     void Update()
@@ -23,6 +23,7 @@ public class Clock_UI : MonoBehaviour
 
     void UpdataText()
     {
+        // 「XX:XX」形式で表示
         float minutes, seconds;
         SecondsToMMSS(MainScene.Instance.gameTimerRemaining, out minutes, out seconds);
         var minutesText = minutes.ToString("00");

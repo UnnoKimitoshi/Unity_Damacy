@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 // 球にくっつくオブジェクトクラス
@@ -21,7 +19,7 @@ public class AttachableObject : MonoBehaviour
     }
     private void Update()
     {
-        // くっついた場合球のスケールに影響されるので補正をスケールを維持
+        // くっついた場合球のスケールに影響されるので補正値をかけてスケールを維持
         if (_isAttaced)
         {
             transform.localScale = _defaultScale / _player.Scale.x;

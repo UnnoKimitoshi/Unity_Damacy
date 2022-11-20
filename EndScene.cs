@@ -34,7 +34,7 @@ public class EndScene : MonoBehaviour
 
 
 
-    const string BASE_URL = "http://localhost";
+    const string BASE_URL = "http://www.kimitohsi.com";
     const string CONNECTIONG_TEXT = "サーバーと通信中です";
     const string CONNECTING_ERROR = "エラーが発生しました。<br>タイトルへ戻ります。";
     // スコアを表示するテキスト

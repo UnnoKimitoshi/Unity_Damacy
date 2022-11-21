@@ -112,7 +112,7 @@ public class EndScene : MonoBehaviour
         if (!Regex.IsMatch(_inputName.text, "^[a-zA-Z0-9-_]*$"))
         {
             _registInfoText.text = "名前は半角英数字のみ使用できます";
-            button.enabled = true;
+            button.interactable = true;
             return;
         }
         if (_inputName.text == null) _inputName.text = "guest";

@@ -34,7 +34,7 @@ public class EndScene : MonoBehaviour
 
 
 
-    const string BASE_URL = "http://www.kimitohsi.com";
+    const string BASE_URL = "http://www.kimitoshi.com";
     const string CONNECTIONG_TEXT = "サーバーと通信中です";
     const string CONNECTING_ERROR = "エラーが発生しました。<br>タイトルへ戻ります。";
     // スコアを表示するテキスト
@@ -166,6 +166,7 @@ public class EndScene : MonoBehaviour
             StartCoroutine(LoadTitle());
             yield break;
         }
+        _getRankingInfoText.text = "";
         // レコード情報をパネルに設定
         var rank = 1;
         foreach (var record in responseRanking.records)

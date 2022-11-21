@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Player : Singleton<Player>
@@ -8,20 +6,20 @@ public class Player : Singleton<Player>
     Rigidbody _rb;
     // 移動の入力値
     float _horizontal, _vertical;
-    [SerializeField] float _speed;
-    float Speed
+    [SerializeField] float _defaultSpeed;
+    float _speed
     {
         get
         {
             // 大きくなるに連れて遅くなる
             var rate = Mathf.Lerp(1, 0.5f, size / MainScene.Instance.targetSize);
-            return _speed * size * rate;
+            return _defaultSpeed * size * rate;
         }
     }
     Vector3 _scale;
     public Vector3 Scale => _scale * size;
-    Vector3 _gravity = new Vector3(0, -9.8f, 0);
-    Vector3 gravity => _gravity * size;
+    Vector3 _defaultGravity = new Vector3(0, -9.8f, 0);
+    Vector3 gravity => _defaultGravity * size;
     //　ゲーム上での球のサイズ
     public float size = 1;
 
@@ -51,7 +49,7 @@ public class Player : Singleton<Player>
             ).normalized;
         var moveDir = cameraForward * _vertical
             + Camera.main.transform.right * _horizontal;
-        _rb.AddForce(moveDir * Speed);
+        _rb.AddForce(moveDir * _speed);
         _rb.AddForce(gravity, ForceMode.Acceleration);
     }
 }

@@ -25,19 +25,19 @@ public class Size_UI : MonoBehaviour
     [SerializeField] float _scalingSpeed = 100;
     [SerializeField] float _scalingRate = 0.05f;
     float _angle = 0;
-    Vector3 _imageScale;
-    Vector3 ImageScale
+    Vector3 _defaultImageScale;
+    Vector3 _imageScale
     {
         get
         {
             var scale = Mathf.Lerp(1, _maxImageScale, Player.Instance.size / MainScene.Instance.targetSize);
-            return _imageScale * scale;
+            return _defaultImageScale * scale;
         }
     }
 
     private void Start()
     {
-        _imageScale = _insideImage.localScale;
+        _defaultImageScale = _insideImage.localScale;
         _targetSize.text = (MainScene.Instance.targetSize / 100).ToString() + "m";
         _maxImageScale = _targetScaleImage.localScale.x;
     }
@@ -57,8 +57,8 @@ public class Size_UI : MonoBehaviour
         _angle += Time.deltaTime * _scalingSpeed;
         _angle = Mathf.Repeat(_angle, 360);
         var rate = (float)Math.Sin(_angle * (Math.PI / 180)) * 0.05f + 1;
-        _insideImage.localScale = ImageScale * rate;
-        _outsideImage.localScale = ImageScale * rate;
+        _insideImage.localScale = _imageScale * rate;
+        _outsideImage.localScale = _imageScale * rate;
     }
 
     private void UpdatePlayerSizeText()

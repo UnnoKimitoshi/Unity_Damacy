@@ -9,11 +9,8 @@ public class TrackingCamera : MonoBehaviour
     [SerializeField] Vector3 _angle = new Vector3();
     [SerializeField] float _mouseSensivity = 4;
     [SerializeField] Transform _camera;
-    [SerializeField] Vector3 _cameraOffset = new Vector3(0, 0, 0);
-    Vector3 CameraOffset
-    {
-        get { return _cameraOffset * Player.Instance.size; }
-    }
+    [SerializeField] Vector3 _defaultCameraOffset = new Vector3(0, 0, 0);
+    Vector3 _cameraOffset => _defaultCameraOffset * Player.Instance.size;
 
     void Awake()
     {
@@ -45,8 +42,8 @@ public class TrackingCamera : MonoBehaviour
 
         // 子ども（カメラ）の場所を設定
         var cameraPos = _camera.localPosition;
-        cameraPos.y = CameraOffset.y;
-        cameraPos.z = CameraOffset.z;
+        cameraPos.y = _cameraOffset.y;
+        cameraPos.z = _cameraOffset.z;
         _camera.localPosition = cameraPos;
     }
 }
